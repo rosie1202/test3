@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vtuber養成挑戰遊戲</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      color: #003366;
+    }
+    #game {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .choice-btn {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #005599;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+    }
+    .choice-btn:hover {
+      background-color: #003366;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 Vtuber養成挑戰</h1>
+  <div id="game">
+    <p id="story">你是一位想成為Vtuber的大學生，第一步你要做什麼？</p>
+    <button class="choice-btn" onclick="choose(1)">自學建模、剪輯與直播技巧</button>
+    <button class="choice-btn" onclick="choose(2)">委託專業繪師與建模師幫忙</button>
+  </div>
+
+  <script>
+    let stage = 0;
+    let stress = 0;
+
+    function choose(option) {
+      const story = document.getElementById("story");
+      const game = document.getElementById("game");
+      game.innerHTML = "";
+
+      if (stage === 0) {
+        if (option === 1) {
+          stress += 2;
+          story.innerText = "你選擇自學，但學習過程壓力很大。接下來你要怎麼經營直播？";
+        } else {
+          story.innerText = "你選擇委託專業團隊，形象打造得很完美。你決定的直播風格是？";
+        }
+        stage = 1;
+        showChoices(["遊戲實況+雜談", "主題內容（如歌回、投資、繪圖）"]);
+
+      } else if (stage === 1) {
+        if (option === 1) {
+          story.innerText = "你和觀眾互動愉快，但長時間直播開始讓你身心疲憊。你要怎麼調整？";
+          stress += 1;
+        } else {
+          story.innerText = "你主打特定內容，成功累積粉絲，但壓力也隨之而來。你會？";
+          stress += 2;
+        }
+        stage = 2;
+        showChoices(["嘗試建立作息與減壓機制", "繼續努力忍耐，撐下去"]);
+
+      } else if (stage === 2) {
+        if (option === 1) {
+          stress -= 1;
+          story.innerText = "你買了升降桌、固定散步，壓力稍微緩解，也慢慢找到創作的節奏。";
+        } else {
+          stress += 2;
+          story.innerText = "你選擇咬牙撐過，但壓力逐漸累積，甚至出現身體不適……";
+        }
+        stage = 3;
+        showChoices(["完成三個月養成挑戰", "退出V圈"]);
+
+      } else if (stage === 3) {
+        if (option === 1 && stress <= 3) {
+          story.innerText = "🎉 恭喜！你成功完成三個月Vtuber養成挑戰，並找到屬於自己的經營之道！";
+        } else {
+          story.innerText = "你最終決定退出V圈，儘管過程艱辛，你仍從中學到了很多。";
+        }
+      }
+    }
+
+    function showChoices(choices) {
+      const game = document.getElementById("game");
+      const story = document.getElementById("story");
+      game.appendChild(story);
+      choices.forEach((text, index) => {
+        const btn = document.createElement("button");
+        btn.innerText = text;
+        btn.className = "choice-btn";
+        btn.onclick = () => choose(index + 1);
+        game.appendChild(btn);
+      });
+    }
+  </script>
+</body>
+</html>
