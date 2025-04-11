@@ -40,8 +40,10 @@
   <h1>🎮 Vtuber養成挑戰</h1>
   <div id="game">
     <p id="story">你是一位想成為Vtuber的大學生，第一步你要做什麼？</p>
-    <button class="choice-btn" onclick="choose(1)">自學建模、剪輯與直播技巧</button>
-    <button class="choice-btn" onclick="choose(2)">委託專業繪師與建模師幫忙</button>
+    <div id="choices">
+      <button class="choice-btn" onclick="choose(1)">自學建模、剪輯與直播技巧</button>
+      <button class="choice-btn" onclick="choose(2)">委託專業繪師與建模師幫忙</button>
+    </div>
   </div>
 
   <script>
@@ -50,8 +52,8 @@
 
     function choose(option) {
       const story = document.getElementById("story");
-      const game = document.getElementById("game");
-      game.innerHTML = "";
+      const choices = document.getElementById("choices");
+      choices.innerHTML = "";
 
       if (stage === 0) {
         if (option === 1) {
@@ -94,16 +96,15 @@
       }
     }
 
-    function showChoices(choices) {
-      const game = document.getElementById("game");
-      const story = document.getElementById("story");
-      game.appendChild(story);
-      choices.forEach((text, index) => {
+    function showChoices(choicesArray) {
+      const choices = document.getElementById("choices");
+      choices.innerHTML = "";
+      choicesArray.forEach((text, index) => {
         const btn = document.createElement("button");
         btn.innerText = text;
         btn.className = "choice-btn";
         btn.onclick = () => choose(index + 1);
-        game.appendChild(btn);
+        choices.appendChild(btn);
       });
     }
   </script>
